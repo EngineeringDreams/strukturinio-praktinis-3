@@ -20,19 +20,22 @@ bool nuskaitytiDuomenis(
     int kiekis[],
     int &n)
 {
-    ifstream failas("uzsakymas.txt");
+    ifstream failas(R"(C:\Users\eugen\Desktop\strukturinio-praktinis-3\uzsakymas.txt)");
+
+    if (!(failas >> n)) {
+        cout << "KLAIDA: Neteisingas prekiu irasu skaicius!\n";
+        return false;
+    }
+    failas.ignore(numeric_limits<streamsize>::max(), '\n');
+
 
     if (!failas.is_open()) {
         cout << "KLAIDA: Nepavyko atidaryti uzsakymas.txt failo!\n";
         return false;
     }
 
-    if (!(failas >> n)) {
-        cout << "KLAIDA: Neteisingas prekiu irasu skaicius!\n";
-        return false;
-    }
 
-    failas.ignore(numeric_limits<streamsize>::max(), '\n');
+
 
     if (n < 1 || n > MAX) {
         cout << "KLAIDA: Prekiu skaicius turi buti nuo 1 iki 100!\n";
@@ -50,6 +53,7 @@ bool nuskaitytiDuomenis(
         }
 
         stringstream ss(eilute);
+
 
         if (!getline(ss, kategorija[i], ';') ||
             !getline(ss, pavadinimas[i], ';') ||
